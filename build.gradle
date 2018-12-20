@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+wrapper {
+    distributionType = 'all'
+}
+
+dependencies {
+    implementation gradleApi()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'jp.s64.gradle'
+            artifactId = 'dependencies-preloader'
+            version = '0.0.1-SNAPSHOT'
+
+            from components.java
+        }
+    }
+}
