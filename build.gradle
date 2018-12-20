@@ -1,6 +1,7 @@
 plugins {
+    id 'com.gradle.plugin-publish' version '0.10.0'
+    id 'java-gradle-plugin'
     id 'java'
-    id 'maven-publish'
 }
 
 wrapper {
@@ -11,14 +12,34 @@ dependencies {
     implementation gradleApi()
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'jp.s64.gradle'
-            artifactId = 'dependencies-preloader'
-            version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
+group = 'jp.s64.gradle'
 
-            from components.java
+gradlePlugin {
+    plugins {
+        dependenciesPreloaderPlugin {
+            id = 'jp.s64.gradle.dependencies-preloader'
+            implementationClass = 'jp.s64.gradle.dependenciespreloader.DependenciesPreloaderPlugin'
         }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/S64/gradle-dependencies-preloader-plugin'
+    vcsUrl = 'https://github.com/S64/gradle-dependencies-preloader-plugin'
+
+    plugins {
+        dependenciesPreloaderPlugin {
+            displayName = 'gradle-dependencies-preloader-plugin'
+            description = 'Preload and cache all dependencies'
+            tags = ['dependency', 'dependencies', 'cache']
+            version = '0.0.1'
+        }
+    }
+
+    mavenCoordinates {
+        groupId = 'jp.s64.gradle'
+        artifactId = 'dependencies-preloader-plugin'
+        version = '0.0.1'
     }
 }
